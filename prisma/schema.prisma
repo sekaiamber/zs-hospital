@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Constant {
+  id          Int       @id @default(autoincrement())
+  name        String  @unique
+  value       String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+
+model Article {
+  id          Int      @id @default(autoincrement())
+  hash        String   @unique
+  title       String
+  time        DateTime
+  position    Int
+  readCount   Int
+  onlineCount Int
+  likeCount   Int
+  forwardCount Int
+  commentCount Int
+  link        String @db.Text
+  cover       String @db.Text
+  category    String
+  mediaCount  Int    @default(0)
+  wordCount   Int    @default(0)
+  refCount    Int    @default(0)
+  refCountSummary String? @db.MediumText
+  diseasePrinciple Boolean @default(false)
+  diseasePrincipleSummary String? @db.MediumText
+  localRelevance Boolean @default(false)
+  localRelevanceSummary String? @db.MediumText
+  mainDoctorTitle String?
+  mainDoctorTitleSummary String? @db.MediumText
+  storyCount Int @default(0)
+  storyCountSummary String? @db.MediumText
+  locked      Boolean @default(false)
+  html        String?  @db.MediumText
+  cleanedHtml String?  @db.MediumText
+  aiResponse  String?  @db.MediumText
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([hash])
+  @@index([category])
+}
